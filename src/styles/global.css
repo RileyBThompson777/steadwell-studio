@@ -26,6 +26,7 @@
 
   /* Type */
   --font-display: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
+  --display-weight: 650; /* one weight for every heading, price and display number */
   --font-body: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
@@ -107,7 +108,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 720;
+  font-weight: var(--display-weight);
   font-stretch: 88%;
   line-height: 1.04;
   letter-spacing: -0.02em;
@@ -123,7 +124,6 @@ h2 {
 h3 {
   font-size: var(--step-2);
   line-height: 1.15;
-  font-weight: 650;
   letter-spacing: -0.01em;
 }
 p {
@@ -131,16 +131,6 @@ p {
 }
 em {
   font-style: italic;
-}
-/* Emphasis inside headings: the same typeface in a thin weight (no italics). */
-.display-slim {
-  font-style: normal;
-  font-weight: 260;
-}
-.num {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-variant-numeric: tabular-nums;
 }
 .eyebrow {
   font-family: var(--font-body);

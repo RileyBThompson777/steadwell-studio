@@ -76,9 +76,11 @@ These are intended as the foundation for client sites: copy the project, replace
 
 - Palette: forest `#24392D`, ivory `#F4F1E8`, charcoal `#252525`, sage `#A5AE9E`
   (use `--c-sage-ink` `#5D6857` for sage-coloured *text* on ivory — plain sage fails contrast).
-- Type: Archivo (display, self-hosted variable font; bold ~720 weight, 88% width) + Inter (body).
-  Emphasis inside headings uses the thin weight via `.display-slim` — no italics or curvy display faces
-  (owner found them hard to read).
+- Type: Archivo (display, self-hosted variable font, 88% width) + Inter (body). Every heading, price
+  and display number uses ONE weight, `--display-weight` (650). Do not mix bold and thin words in a
+  heading, and do not use italics or curvy display faces. The owner found both hard to read and
+  says they look AI-generated.
+- Copy: write plain sentences. Do not use em dashes (—) in site copy; use a full stop or comma instead.
 - Editorial layout: hairline rules, numbered sections, generous whitespace, near-square corners
   (`--radius: 2px`).
 - Avoid: gradients as decoration, rounded "SaaS" cards, robot/AI imagery, buzzwords, stock-startup tropes.

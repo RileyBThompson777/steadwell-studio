@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { title, description = business.description, rawTitle = false, noindex = false } = Astro.props;
-const fullTitle = rawTitle ? title : `${title} — ${business.name}`;
+const fullTitle = rawTitle ? title : `${title} | ${business.name}`;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 
 const jsonLd = {

@@ -172,7 +172,7 @@ const configured = endpoint.length > 0;
 
       if (!endpoint) {
         setStatus(
-          'Thank you — your details look good, but our online form is not connected yet, so nothing has been sent. Please check back soon.',
+          'Thank you. Your details look good, but our online form is not connected yet, so nothing has been sent. Please check back soon.',
           'warn',
         );
         return;
@@ -216,7 +216,7 @@ const configured = endpoint.length > 0;
   legend {
     font-family: var(--font-display);
     font-size: var(--step-2);
-    font-weight: 680;
+    font-weight: var(--display-weight);
     font-stretch: 88%;
     margin-bottom: 1.25rem;
     padding: 0;

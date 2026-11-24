@@ -13,7 +13,7 @@ export const services: Service[] = [
   {
     id: 'design',
     title: 'A five-page website, designed for you',
-    summary: 'Home, services, about, gallery and contact — written and designed around your business.',
+    summary: 'Home, services, about, gallery and contact pages, written and designed around your business.',
     detail:
       'We plan the structure, write clear copy with you and design every page to match your business. No off-the-shelf theme with your logo dropped in.',
   },
@@ -36,7 +36,7 @@ export const services: Service[] = [
     title: 'Contact and quote forms',
     summary: 'Simple forms that let customers ask for a quote without picking up the phone.',
     detail:
-      'Forms are set up to ask the questions you need answered — vehicle type, service, preferred dates — and send enquiries straight to you.',
+      'Forms are set up to ask the questions you need answered, such as vehicle type, service and preferred dates, and send enquiries straight to you.',
   },
   {
     id: 'booking',
@@ -50,7 +50,7 @@ export const services: Service[] = [
     title: 'Local search basics',
     summary: 'The groundwork that helps nearby customers find you on Google.',
     detail:
-      'Page titles, descriptions, structured business details, a sitemap and guidance on your Google Business Profile. We do not promise rankings — nobody honest can.',
+      'Page titles, descriptions, structured business details, a sitemap and guidance on your Google Business Profile. We do not promise rankings, because nobody honest can.',
   },
   {
     id: 'reporting',
@@ -62,7 +62,7 @@ export const services: Service[] = [
   {
     id: 'updates',
     title: '30 minutes of updates each month',
-    summary: 'New prices, photos, seasonal offers — just send them over.',
+    summary: 'New prices, photos or seasonal offers. Just send them over.',
     detail:
       'Up to 30 minutes of content changes every month are included. Larger projects are quoted separately before any work begins.',
   },

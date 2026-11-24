@@ -173,3 +173,9 @@ describe('security hygiene', () => {
     assert.ok(existsSync(join(DIST, '_headers')));
   });
 });
+
+describe('house style', () => {
+  test('no em dashes in visible page copy', () => {
+    for (const path of PAGES) assert.doesNotMatch(text(path), /—/, path);
+  });
+});

@@ -18,11 +18,11 @@ const notIncluded = [
 
 <BaseLayout
   title="Services"
-  description={`A five-page custom website with hosting, local SEO basics, booking, forms, monthly reporting and updates — ${formatPrice(pricing.monthly)}/month from Steadwell Studio.`}
+  description={`A five-page custom website with hosting, local SEO basics, booking, forms, monthly reporting and updates. ${formatPrice(pricing.monthly)}/month from Steadwell Studio.`}
 >
   <PageHero
     eyebrow="Services"
-    title="A complete website, <em class='display-slim'>looked after.</em>"
+    title="A complete website, looked after."
     lede="Every subscription includes design, build, hosting and ongoing care. You get a site that works hard for your business, without having to become a web developer."
   />
 
@@ -38,7 +38,7 @@ const notIncluded = [
       <div>
         <p class="eyebrow" data-reveal>02 · Starting with detailing</p>
         <h2 id="detailers-title" data-reveal style="--reveal-delay: 80ms">
-          Built around how detailing customers <em class="display-slim">actually buy.</em>
+          Built around how detailing customers actually buy.
         </h2>
       </div>
       <div class="prose" data-reveal style="--reveal-delay: 140ms">
@@ -53,7 +53,7 @@ const notIncluded = [
           <li>Service-area information for mobile detailers</li>
           <li>Booking links so customers can pick a time without a phone call</li>
         </ul>
-        <p>Other local service businesses are welcome too — the same approach works for many trades.</p>
+        <p>Other local service businesses are welcome too. The same approach works for many trades.</p>
       </div>
     </div>
   </section>
@@ -117,7 +117,11 @@ const notIncluded = [
     content: '✓';
   }
   .dashes li::before {
-    content: '—';
+    content: '';
+    top: 1.45rem;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--c-sage-ink);
     color: var(--c-sage-ink);
   }
   @media (min-width: 56rem) {

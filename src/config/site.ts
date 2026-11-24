@@ -19,7 +19,7 @@ export const business = {
   regionShort: 'KY',
   /** Short description used in search results and link previews. */
   description:
-    'Steadwell Studio designs, hosts and maintains websites for small service businesses in Louisville, Kentucky — starting with automotive detailers. $129 a month, no setup fee.',
+    'Steadwell Studio designs, hosts and maintains websites for small service businesses in Louisville, Kentucky, starting with automotive detailers. $129 a month, no setup fee.',
   initialNiche: 'automotive detailing',
 };
 

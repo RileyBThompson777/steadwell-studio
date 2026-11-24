@@ -68,7 +68,13 @@ const label = project.kind === 'concept' ? 'Design concept · fictional business
     font-size: var(--step--1);
   }
   .project__focus li::before {
-    content: '— ';
+    content: '';
+    display: inline-block;
+    width: 0.75rem;
+    height: 1px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    background: currentColor;
     color: var(--c-sage-ink);
   }
   @media (min-width: 56rem) {

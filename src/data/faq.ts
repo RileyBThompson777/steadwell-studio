@@ -27,7 +27,7 @@ export const faqs: FaqItem[] = [
   {
     question: 'What costs extra?',
     answer:
-      'Premium third-party services may carry their own fees — for example a paid booking platform, a premium email inbox, licensed stock photography or domain registration. We will always tell you about any extra cost before anything is set up.',
+      'Premium third-party services may carry their own fees, for example a paid booking platform, a premium email inbox, licensed stock photography or domain registration. We will always tell you about any extra cost before anything is set up.',
   },
   {
     question: 'Do I own my domain name?',
@@ -36,7 +36,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: 'What counts as a monthly update?',
-    answer: `Content changes such as new prices, photos, service descriptions, hours or a seasonal promotion — up to ${pricing.includedUpdateMinutes} minutes of work each month. Bigger changes, like a new page or a redesign, are quoted first.`,
+    answer: `Content changes such as new prices, photos, service descriptions, hours or a seasonal promotion, up to ${pricing.includedUpdateMinutes} minutes of work each month. Bigger changes, like a new page or a redesign, are quoted first.`,
   },
   {
     question: 'How long does it take to launch?',
