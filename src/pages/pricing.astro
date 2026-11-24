@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PricingPlan from '../components/PricingPlan.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pricing, formatPrice } from '../config/site';
+import { faqs } from '../data/faq';
+
+const pricingFaqs = faqs.filter((f) =>
+  ['What does it cost?', 'Why is there a three-month commitment?', 'What costs extra?', 'What counts as a monthly update?', 'What happens if I cancel?'].includes(f.question),
+);
+---
+
+<BaseLayout
+  title="Pricing"
+  description={`${formatPrice(pricing.monthly)} per month, ${formatPrice(pricing.setupFee)} setup fee. A custom five-page website with hosting, updates and support included.`}
+>
+  <PageHero
+    eyebrow="Pricing"
+    title="Simple, <em class='display-italic'>predictable</em> pricing."
+    lede="One plan with everything a local service business needs. No setup fee, no surprise invoices."
+  />
+
+  <section class="section" aria-label="Plan details">
+    <div class="container">
+      <PricingPlan />
+    </div>
+  </section>
+
+  <section class="section section--tight theme-ivory-deep" aria-labelledby="pricing-faq-title">
+    <div class="container">
+      <h2 id="pricing-faq-title" class="faq-title" data-reveal>Pricing questions</h2>
+      <FaqList items={pricingFaqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .faq-title {
+    font-size: var(--step-3);
+    margin-bottom: 2rem;
+  }
+</style>

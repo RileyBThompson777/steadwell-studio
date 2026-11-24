@@ -1,0 +1,342 @@
+---
+/**
+ * Complimentary design preview request form.
+ *
+ * ⚠️ NEEDS CONFIGURATION: submissions are only delivered once
+ * `integrations.formEndpoint` is set in src/config/site.ts.
+ * Until then the form validates input and then tells the visitor it is not
+ * connected yet — it never pretends a request was sent.
+ */
+import { integrations, contact, offer } from '../config/site';
+
+const endpoint = integrations.formEndpoint;
+const configured = endpoint.length > 0;
+---
+
+<form
+  class="pform"
+  method="post"
+  action={configured ? endpoint : undefined}
+  novalidate
+  data-preview-form
+  data-endpoint={endpoint}
+  aria-describedby="pform-required-note"
+>
+  <p id="pform-required-note" class="pform__note">Fields marked <span aria-hidden="true">*</span><span class="visually-hidden">with an asterisk</span> are required.</p>
+
+  <div class="pform__error-summary" role="alert" tabindex="-1" hidden data-error-summary>
+    <p><strong>Please check the highlighted fields.</strong></p>
+  </div>
+
+  <fieldset>
+    <legend>About you</legend>
+    <div class="pform__grid">
+      <div class="field">
+        <label for="f-name">Your name <span aria-hidden="true">*</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+        <p class="field__error" id="f-name-err" data-error-for="name"></p>
+      </div>
+      <div class="field">
+        <label for="f-email">Email <span aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="f-email-err" />
+        <p class="field__error" id="f-email-err" data-error-for="email"></p>
+      </div>
+      <div class="field">
+        <label for="f-phone">Phone <span class="field__optional">(optional)</span></label>
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>About your business</legend>
+    <div class="pform__grid">
+      <div class="field">
+        <label for="f-business">Business name <span aria-hidden="true">*</span></label>
+        <input id="f-business" name="business" type="text" autocomplete="organization" required aria-describedby="f-business-err" />
+        <p class="field__error" id="f-business-err" data-error-for="business"></p>
+      </div>
+      <div class="field">
+        <label for="f-type">Type of business <span aria-hidden="true">*</span></label>
+        <select id="f-type" name="business_type" required aria-describedby="f-type-err">
+          <option value="">Choose one</option>
+          <option>Automotive detailing</option>
+          <option>Other automotive service</option>
+          <option>Other local service business</option>
+        </select>
+        <p class="field__error" id="f-type-err" data-error-for="business_type"></p>
+      </div>
+      <div class="field">
+        <label for="f-area">City or service area <span aria-hidden="true">*</span></label>
+        <input id="f-area" name="area" type="text" autocomplete="address-level2" required aria-describedby="f-area-err" />
+        <p class="field__error" id="f-area-err" data-error-for="area"></p>
+      </div>
+      <div class="field">
+        <label for="f-site">Current website <span class="field__optional">(optional)</span></label>
+        <input id="f-site" name="current_website" type="text" inputmode="url" autocomplete="url" placeholder="If you have one" />
+      </div>
+      <div class="field">
+        <label for="f-operating">Is the business currently operating? <span aria-hidden="true">*</span></label>
+        <select id="f-operating" name="operating" required aria-describedby="f-operating-err">
+          <option value="">Choose one</option>
+          <option>Yes, taking customers now</option>
+          <option>Launching within 3 months</option>
+          <option>Still in the planning stage</option>
+        </select>
+        <p class="field__error" id="f-operating-err" data-error-for="operating"></p>
+      </div>
+      <div class="field">
+        <label for="f-timeline">When would you like a new site? <span class="field__optional">(optional)</span></label>
+        <select id="f-timeline" name="timeline">
+          <option value="">Choose one</option>
+          <option>As soon as possible</option>
+          <option>In the next 1–3 months</option>
+          <option>Just exploring</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="f-message">Tell us about your business and customers <span class="field__optional">(optional)</span></label>
+      <textarea id="f-message" name="message" rows="5"></textarea>
+    </div>
+  </fieldset>
+
+  <!-- Spam trap: hidden from people, often filled by bots. -->
+  <div class="pform__trap" aria-hidden="true">
+    <label for="f-company-url">Leave this field empty</label>
+    <input id="f-company-url" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="pform__actions">
+    <button type="submit" class="pform__submit" data-submit>
+      <span data-submit-label>{offer.primaryCta}</span>
+    </button>
+    <p class="pform__small">No cost, no obligation. We reply {contact.responseTime}.</p>
+  </div>
+
+  <div class="pform__status" role="status" aria-live="polite" data-status></div>
+
+  {
+    !configured && (
+      <noscript>
+        <p class="pform__status pform__status--warn">
+          This form is not connected yet. Please check back soon.
+        </p>
+      </noscript>
+    )
+  }
+</form>
+
+<script>
+  import { validatePreviewForm } from '../scripts/form-validation';
+
+  const form = document.querySelector<HTMLFormElement>('[data-preview-form]');
+  if (form) {
+    const endpoint = form.dataset.endpoint ?? '';
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const summary = form.querySelector<HTMLElement>('[data-error-summary]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+
+    const showErrors = (errors: Record<string, string>) => {
+      form.querySelectorAll<HTMLElement>('[data-error-for]').forEach((el) => {
+        const name = el.dataset.errorFor!;
+        const field = form.elements.namedItem(name) as HTMLInputElement | null;
+        const msg = errors[name] ?? '';
+        el.textContent = msg;
+        field?.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      });
+    };
+
+    const setStatus = (message: string, tone: 'ok' | 'warn' | 'error' | '' = '') => {
+      status.textContent = message;
+      status.className = `pform__status${tone ? ` pform__status--${tone}` : ''}`;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setStatus('');
+      const data = new FormData(form);
+      const errors = validatePreviewForm(Object.fromEntries(data) as Record<string, string>);
+      showErrors(errors);
+
+      const firstInvalid = Object.keys(errors)[0];
+      if (firstInvalid) {
+        summary.hidden = false;
+        (form.elements.namedItem(firstInvalid) as HTMLElement | null)?.focus();
+        return;
+      }
+      summary.hidden = true;
+
+      // Silently drop bot submissions.
+      if (String(data.get('_gotcha') ?? '').trim()) return;
+
+      if (!endpoint) {
+        setStatus(
+          'Thank you — your details look good, but our online form is not connected yet, so nothing has been sent. Please check back soon.',
+          'warn',
+        );
+        return;
+      }
+
+      submit.disabled = true;
+      setStatus('Sending…');
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        window.location.assign('/thank-you/');
+      } catch {
+        setStatus('Sorry, something went wrong sending your request. Please try again in a moment.', 'error');
+        submit.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .pform {
+    display: grid;
+    gap: 2.25rem;
+  }
+  .pform__note,
+  .pform__small {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  fieldset {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  legend {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    margin-bottom: 1.25rem;
+    padding: 0;
+  }
+  .pform__grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 40rem) {
+    .pform__grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1.5rem;
+    }
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+  }
+  label {
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .field__optional {
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.85rem;
+    font-size: 1rem; /* 16px+ prevents iPhone zoom on focus */
+    background: #fbfaf5;
+    border: 1px solid rgb(37 37 37 / 0.35);
+    border-radius: var(--radius);
+    transition: border-color 0.2s var(--ease);
+  }
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23252525' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--c-charcoal);
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+    border-color: var(--c-forest);
+  }
+  [aria-invalid='true'] {
+    border-color: #9b2c1f;
+  }
+  .field__error {
+    color: #9b2c1f;
+    font-size: var(--step--1);
+    min-height: 0;
+  }
+  .field__error:empty {
+    display: none;
+  }
+  .pform__error-summary {
+    padding: 1rem 1.25rem;
+    border-left: 3px solid #9b2c1f;
+    background: #f6e9e4;
+  }
+  .pform__trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .pform__actions {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+  .pform__submit {
+    min-height: 52px;
+    padding: 0.9rem 1.6rem;
+    background: var(--c-forest);
+    color: var(--c-ivory);
+    border: 0;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s var(--ease);
+  }
+  .pform__submit:hover {
+    background: var(--c-forest-deep);
+  }
+  .pform__submit:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+  .pform__status:empty {
+    display: none;
+  }
+  .pform__status {
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--c-forest);
+    background: var(--c-ivory-deep);
+  }
+  .pform__status--warn {
+    border-left-color: #8a6a1f;
+    background: #f3ecd9;
+  }
+  .pform__status--error {
+    border-left-color: #9b2c1f;
+    background: #f6e9e4;
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { projects } from '../data/portfolio';
+
+const concepts = projects.filter((p) => p.kind === 'concept');
+const clients = projects.filter((p) => p.kind === 'client');
+---
+
+<BaseLayout
+  title="Work & design concepts"
+  description="Design concepts showing how Steadwell Studio approaches websites for automotive detailing businesses. All concepts are for fictional businesses."
+>
+  <PageHero
+    eyebrow="Work"
+    title="Design concepts, <em class='display-italic'>clearly labelled.</em>"
+    lede="Steadwell Studio is a new studio. Rather than show borrowed work, we’ve designed concepts for fictional detailing businesses to show how we think. Real client projects will appear here, with permission, as they launch."
+  >
+    <p class="notice" data-reveal style="--reveal-delay: 220ms">
+      <strong>Please note:</strong> every project on this page is a design concept for a fictional business.
+      None are real clients, and the mock-ups are illustrations, not screenshots of live websites.
+    </p>
+  </PageHero>
+
+  {
+    clients.length > 0 && (
+      <section class="section" aria-labelledby="clients-title">
+        <div class="container">
+          <h2 id="clients-title" class="visually-hidden">Client projects</h2>
+          <div class="projects">
+            {clients.map((p, i) => <ProjectCard project={p} index={i} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby="concepts-title">
+    <div class="container">
+      <h2 id="concepts-title" class="visually-hidden">Design concepts</h2>
+      <div class="projects">
+        {concepts.map((p, i) => <ProjectCard project={p} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Your business, <em class='display-italic'>as a concept.</em>"
+    text="The best way to judge our work is to see it applied to your own business. Qualified businesses can request a complimentary homepage preview."
+  />
+</BaseLayout>
+
+<style>
+  .notice {
+    margin-top: 2rem;
+    max-width: 60ch;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--c-forest);
+    background: var(--c-ivory-deep);
+    font-size: 0.95rem;
+  }
+  .projects {
+    display: grid;
+    gap: clamp(4rem, 3rem + 5vw, 8rem);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+/**
+ * Link styled as a button. Variants: "primary" (forest), "ghost" (outlined), "text" (arrow link).
+ */
+interface Props {
+  href: string;
+  variant?: 'primary' | 'ghost' | 'text';
+  class?: string;
+}
+const { href, variant = 'primary', class: className } = Astro.props;
+---
+
+<a href={href} class:list={['btn', `btn--${variant}`, className]}>
+  <span><slot /></span>
+  <svg class="btn__arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false">
+    <path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"></path>
+  </svg>
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 48px;
+    padding: 0.85rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition:
+      background 0.3s var(--ease),
+      color 0.3s var(--ease),
+      border-color 0.3s var(--ease);
+  }
+  .btn__arrow {
+    width: 1.15rem;
+    flex: none;
+    transition: transform 0.35s var(--ease);
+  }
+  .btn:hover .btn__arrow {
+    transform: translateX(4px);
+  }
+  .btn--primary {
+    background: var(--c-forest);
+    color: var(--c-ivory);
+  }
+  .btn--primary:hover {
+    background: var(--c-forest-deep);
+  }
+  :global(.theme-forest) .btn--primary {
+    background: var(--c-ivory);
+    color: var(--c-forest);
+  }
+  :global(.theme-forest) .btn--primary:hover {
+    background: #fff;
+  }
+  .btn--ghost {
+    border: 1px solid currentColor;
+  }
+  .btn--ghost:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn--text {
+    padding-inline: 0;
+    border-bottom: 1px solid currentColor;
+    border-radius: 0;
+    min-height: 44px;
+    padding-block: 0.4rem;
+  }
+</style>

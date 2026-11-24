@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceList from '../components/ServiceList.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pricing, formatPrice } from '../config/site';
+
+const notIncluded = [
+  'Paid booking or scheduling platforms (many have free tiers)',
+  'Premium email inboxes and domain registration',
+  'Licensed stock photography or professional photo shoots',
+  'Paid advertising, such as Google Ads',
+  'Large new features or redesigns beyond the monthly update time',
+];
+---
+
+<BaseLayout
+  title="Services"
+  description={`A five-page custom website with hosting, local SEO basics, booking, forms, monthly reporting and updates — ${formatPrice(pricing.monthly)}/month from Steadwell Studio.`}
+>
+  <PageHero
+    eyebrow="Services"
+    title="A complete website, <em class='display-italic'>looked after.</em>"
+    lede="Every subscription includes design, build, hosting and ongoing care. You get a site that works hard for your business, without having to become a web developer."
+  />
+
+  <section class="section" aria-labelledby="included-title">
+    <div class="container">
+      <SectionHeading index="01" eyebrow="Included" id="included-title" title="What you get, in detail." />
+      <ServiceList />
+    </div>
+  </section>
+
+  <section class="section theme-ivory-deep" aria-labelledby="detailers-title">
+    <div class="container split">
+      <div>
+        <p class="eyebrow" data-reveal>02 · Starting with detailing</p>
+        <h2 id="detailers-title" data-reveal style="--reveal-delay: 80ms">
+          Built around how detailing customers <em class="display-italic">actually buy.</em>
+        </h2>
+      </div>
+      <div class="prose" data-reveal style="--reveal-delay: 140ms">
+        <p>
+          Detailing customers want to know three things quickly: what you offer, roughly what it costs,
+          and when you can fit them in. Our detailing sites are planned around those questions.
+        </p>
+        <ul class="ticks" role="list">
+          <li>Clear service packages, from a maintenance wash to paint correction</li>
+          <li>Quote requests that ask for vehicle type and condition up front</li>
+          <li>Before-and-after galleries that load quickly on phones</li>
+          <li>Service-area information for mobile detailers</li>
+          <li>Booking links so customers can pick a time without a phone call</li>
+        </ul>
+        <p>Other local service businesses are welcome too — the same approach works for many trades.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="process-title">
+    <div class="container">
+      <SectionHeading index="03" eyebrow="Process" id="process-title" title="How we work together." />
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="section section--tight theme-ivory-deep" aria-labelledby="extras-title">
+    <div class="container split">
+      <div>
+        <p class="eyebrow" data-reveal>04 · Honest extras</p>
+        <h2 id="extras-title" data-reveal style="--reveal-delay: 80ms">What may cost extra.</h2>
+      </div>
+      <div class="prose" data-reveal style="--reveal-delay: 140ms">
+        <p>
+          Premium third-party services may require additional fees. We’ll always explain any extra cost
+          and get your approval before setting anything up.
+        </p>
+        <ul class="dashes" role="list">
+          {notIncluded.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    gap: 2rem;
+  }
+  .split h2 {
+    margin-top: 1.25rem;
+    max-width: 14ch;
+  }
+  .ticks,
+  .dashes {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--c-line);
+  }
+  .ticks li,
+  .dashes li {
+    padding: 0.8rem 0 0.8rem 1.6rem;
+    border-bottom: 1px solid var(--c-line);
+    position: relative;
+  }
+  .ticks li::before,
+  .dashes li::before {
+    position: absolute;
+    left: 0;
+    color: var(--c-forest);
+  }
+  .ticks li::before {
+    content: '✓';
+  }
+  .dashes li::before {
+    content: '—';
+    color: var(--c-sage-ink);
+  }
+  @media (min-width: 56rem) {
+    .split {
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+    }
+  }
+</style>

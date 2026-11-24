@@ -1,0 +1,129 @@
+---
+/**
+ * TODO(owner): add a short founder introduction (name, photo, background) once
+ * you're ready. Only include true, verifiable details — no invented credentials.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { business } from '../config/site';
+
+const principles = [
+  {
+    title: 'Clear over clever',
+    text: 'Visitors should understand what you do, where you work and how to reach you within seconds. Good design serves that, first.',
+  },
+  {
+    title: 'Honest about cost',
+    text: 'One monthly price. If a third-party service would cost you extra, we tell you before anything is set up.',
+  },
+  {
+    title: 'Built to last',
+    text: 'Fast, accessible, well-structured sites that we keep current — not something launched and forgotten.',
+  },
+  {
+    title: 'Easy to reach',
+    text: 'You deal directly with the people who build and look after your site, not a ticket queue.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description={`${business.name} is an independent web design studio in ${business.city}, ${business.region}, building and caring for websites for small service businesses.`}
+>
+  <PageHero
+    eyebrow="About the studio"
+    title={`An independent studio in <em class='display-italic'>${business.city}.</em>`}
+    lede="Steadwell Studio designs and looks after websites for the small service businesses that keep a city running — beginning with automotive detailers."
+  />
+
+  <section class="section" aria-labelledby="story-title">
+    <div class="container split">
+      <p class="eyebrow" data-reveal>01 · Why we started</p>
+      <div class="prose story">
+        <h2 id="story-title" data-reveal>Good work deserves to be seen properly.</h2>
+        <p data-reveal>
+          Plenty of skilled local businesses rely on word of mouth and a social media page. That works —
+          until a new customer searches online and finds an outdated site, or nothing at all.
+        </p>
+        <p data-reveal>
+          Traditional web projects ask a small business for a large upfront payment, then leave them to
+          handle hosting, updates and security alone. We think a subscription is a better fit: a
+          well-designed site, kept in good order, for a predictable monthly fee.
+        </p>
+        <p data-reveal>
+          We’re starting with automotive detailing because it’s a craft where the quality of the work is
+          visible — and the website should be too.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section theme-forest" aria-labelledby="principles-title">
+    <div class="container">
+      <SectionHeading index="02" eyebrow="Principles" id="principles-title" title="How we work." />
+      <ol class="principles" role="list">
+        {
+          principles.map((p, i) => (
+            <li data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+              <span class="principles__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .story h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.75rem;
+  }
+  .story p {
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .principles {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem;
+  }
+  .principles li {
+    border-top: 1px solid var(--c-line);
+    padding-top: 1.25rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .principles__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--c-sage);
+  }
+  .principles p {
+    color: var(--ink-soft);
+  }
+  @media (min-width: 48rem) {
+    .principles {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 3rem;
+    }
+  }
+  @media (min-width: 56rem) {
+    .split {
+      grid-template-columns: 1fr 3fr;
+    }
+  }
+</style>

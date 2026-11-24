@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Page not found" noindex>
+  <PageHero
+    eyebrow="404"
+    title="This page has <em class='display-italic'>moved on.</em>"
+    lede="The page you’re looking for doesn’t exist or may have been renamed."
+  >
+    <div class="back"><Button href="/" variant="text">Return to the homepage</Button></div>
+  </PageHero>
+</BaseLayout>
+
+<style>
+  .back {
+    margin-top: 2rem;
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+/**
+ * An illustrated (not photographed) website mock-up for a design concept.
+ * Drawn with HTML/CSS so it is light, sharp on every screen and honest about
+ * being an illustration.
+ */
+import type { Project } from '../data/portfolio';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const { bg, ink, accent } = project.palette;
+---
+
+<figure
+  class:list={['mock', `mock--${project.layout}`]}
+  style={`--m-bg:${bg};--m-ink:${ink};--m-accent:${accent}`}
+  aria-label={`Illustrated homepage mock-up for the ${project.name} design concept`}
+  role="img"
+>
+  <div class="mock__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="mock__page" aria-hidden="true">
+    <div class="mock__nav"><i class="mock__logo"></i><i></i><i></i><i></i></div>
+    <div class="mock__hero">
+      <div class="mock__copy">
+        <i class="mock__h mock__h--1"></i>
+        <i class="mock__h mock__h--2"></i>
+        <i class="mock__t"></i>
+        <i class="mock__t mock__t--short"></i>
+        <i class="mock__btn"></i>
+      </div>
+      <div class="mock__visual"></div>
+    </div>
+    <div class="mock__row"><i></i><i></i><i></i></div>
+  </div>
+</figure>
+
+<style>
+  .mock {
+    background: var(--m-bg);
+    color: var(--m-ink);
+    border: 1px solid rgb(37 37 37 / 0.12);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .mock__bar {
+    display: flex;
+    gap: 5px;
+    padding: 9px 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--m-ink) 12%, transparent);
+  }
+  .mock__bar span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--m-ink) 25%, transparent);
+  }
+  .mock__page {
+    flex: 1;
+    padding: 6% 7%;
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+  }
+  .mock i {
+    display: block;
+    background: currentColor;
+  }
+  .mock__nav {
+    display: flex;
+    align-items: center;
+    gap: 6%;
+  }
+  .mock__nav i {
+    height: 3px;
+    width: 9%;
+    opacity: 0.45;
+  }
+  .mock__nav .mock__logo {
+    width: 18%;
+    height: 6px;
+    opacity: 1;
+    margin-right: auto;
+  }
+  .mock__hero {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 7%;
+    align-items: center;
+  }
+  .mock__copy {
+    display: grid;
+    gap: 9px;
+  }
+  .mock__h {
+    height: 11px;
+  }
+  .mock__h--1 {
+    width: 95%;
+  }
+  .mock__h--2 {
+    width: 70%;
+    margin-bottom: 6px;
+  }
+  .mock__t {
+    height: 3px;
+    opacity: 0.4;
+    width: 90%;
+  }
+  .mock__t--short {
+    width: 60%;
+  }
+  .mock__btn {
+    margin-top: 8px;
+    width: 42%;
+    height: 14px;
+    background: var(--m-accent) !important;
+  }
+  .mock__visual {
+    height: 100%;
+    min-height: 60px;
+    background:
+      linear-gradient(135deg, transparent 49.6%, color-mix(in srgb, var(--m-ink) 18%, transparent) 50%, transparent 50.4%),
+      color-mix(in srgb, var(--m-accent) 55%, var(--m-bg));
+  }
+  .mock__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5%;
+  }
+  .mock__row i {
+    height: 18px;
+    opacity: 0.12;
+  }
+
+  /* Layout variants */
+  .mock--stacked .mock__hero {
+    grid-template-columns: 1fr;
+  }
+  .mock--stacked .mock__visual {
+    display: none;
+  }
+  .mock--stacked .mock__row i {
+    height: 34px;
+  }
+  .mock--gallery .mock__hero {
+    grid-template-columns: 1fr 1.6fr;
+  }
+  .mock--gallery .mock__visual {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--m-ink) 30%, var(--m-bg)) 50%, var(--m-accent) 50%);
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { faqs } from '../data/faq';
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Frequently asked questions"
+  description="Answers about Steadwell Studio's website subscription: pricing, the free design preview, commitment, updates and what costs extra."
+>
+  <PageHero
+    eyebrow="FAQ"
+    title="Questions, <em class='display-italic'>answered.</em>"
+    lede="If you can’t find what you’re looking for, ask us through the preview request form."
+  />
+  <section class="section" aria-label="Questions and answers">
+    <div class="container">
+      <FaqList items={faqs} />
+    </div>
+  </section>
+  <CtaBand />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</BaseLayout>

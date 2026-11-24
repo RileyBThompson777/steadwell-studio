@@ -1,0 +1,46 @@
+---
+/** Closing call to action used at the bottom of most pages. */
+import Button from './Button.astro';
+import { offer, contact } from '../config/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'See your business <em class="display-italic">at its best.</em>',
+  text = `Tell us a little about what you do. If it’s a good fit, we’ll design a homepage preview for you — free, and with no obligation. We reply ${contact.responseTime}.`,
+} = Astro.props;
+---
+
+<section class="cta-band theme-forest" aria-labelledby="cta-title">
+  <div class="container cta-band__inner">
+    <p class="eyebrow" data-reveal>Complimentary design preview</p>
+    <h2 id="cta-title" data-reveal style="--reveal-delay: 80ms"><Fragment set:html={title} /></h2>
+    <p class="cta-band__text" data-reveal style="--reveal-delay: 140ms">{text}</p>
+    <div data-reveal style="--reveal-delay: 200ms">
+      <Button href={offer.primaryCtaHref}>{offer.primaryCta}</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: var(--section);
+  }
+  .cta-band__inner {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  h2 {
+    max-width: 14ch;
+    font-size: var(--step-5);
+  }
+  .cta-band__text {
+    max-width: 46ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    margin-bottom: 0.75rem;
+  }
+</style>

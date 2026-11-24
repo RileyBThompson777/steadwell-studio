@@ -1,0 +1,57 @@
+---
+/** Numbered editorial section heading: index + eyebrow on the left, heading on the right. */
+interface Props {
+  index?: string;
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  id?: string;
+}
+const { index, eyebrow, title, intro, id } = Astro.props;
+---
+
+<div class="section-heading">
+  <p class="eyebrow section-heading__meta" data-reveal>
+    {index && <span class="section-heading__index">{index}</span>}
+    {eyebrow}
+  </p>
+  <div>
+    <h2 id={id} data-reveal style="--reveal-delay: 80ms"><Fragment set:html={title} /></h2>
+    {intro && <p class="section-heading__intro" data-reveal style="--reveal-delay: 140ms">{intro}</p>}
+  </div>
+</div>
+
+<style>
+  .section-heading {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  }
+  .section-heading__index {
+    font-family: var(--font-display);
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 1rem;
+    margin-right: 0.75rem;
+  }
+  h2 {
+    max-width: 18ch;
+  }
+  .section-heading__intro {
+    margin-top: 1.4rem;
+    max-width: 52ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+  @media (min-width: 56rem) {
+    .section-heading {
+      grid-template-columns: 1fr 3fr;
+      align-items: start;
+    }
+    .section-heading__meta {
+      padding-top: 0.9rem;
+    }
+  }
+</style>

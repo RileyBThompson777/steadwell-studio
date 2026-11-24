@@ -1,0 +1,78 @@
+---
+/**
+ * BaseLayout — wraps every page with <head>, header, footer and the
+ * reveal-on-scroll script. Pass a unique `title` and `description` per page.
+ */
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business, integrations } from '../config/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Use a full custom title instead of "Page — Steadwell Studio". */
+  rawTitle?: boolean;
+  noindex?: boolean;
+}
+
+const { title, description = business.description, rawTitle = false, noindex = false } = Astro.props;
+const fullTitle = rawTitle ? title : `${title} — ${business.name}`;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: business.name,
+  description: business.description,
+  areaServed: `${business.city}, ${business.region}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: business.city,
+    addressRegion: business.regionShort,
+    addressCountry: 'US',
+  },
+  ...(Astro.site ? { url: Astro.site.href } : {}),
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#24392D" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={business.name} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/reveal';
+    </script>
+    {
+      integrations.cloudflareAnalyticsToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: integrations.cloudflareAnalyticsToken })}
+        />
+      )
+    }
+  </body>
+</html>

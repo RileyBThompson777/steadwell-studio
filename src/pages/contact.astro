@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PreviewForm from '../components/PreviewForm.astro';
+import Button from '../components/Button.astro';
+import { contact, integrations } from '../config/site';
+
+const nextSteps = [
+  'We read your request and look at how your business currently appears online.',
+  `We reply ${contact.responseTime}, to let you know whether a preview is a good fit.`,
+  'If it is, we design a homepage preview and walk you through it. No cost, no obligation.',
+];
+---
+
+<BaseLayout
+  title="Request your free design preview"
+  description="Request a complimentary homepage design preview from Steadwell Studio. For qualified local service businesses in and around Louisville, Kentucky."
+>
+  <PageHero
+    eyebrow="Contact · Free design preview"
+    title="Let’s see what your site <em class='display-italic'>could be.</em>"
+    lede="Tell us about your business. If it’s a good fit, we’ll design a homepage preview for you — at no cost and with no obligation."
+  />
+
+  <section class="section" aria-label="Preview request">
+    <div class="container contact">
+      <aside class="contact__aside" aria-labelledby="next-title">
+        <h2 id="next-title" class="contact__h" data-reveal>What happens next</h2>
+        <ol class="steps" role="list" data-reveal>
+          {nextSteps.map((s) => <li>{s}</li>)}
+        </ol>
+
+        <div class="contact__details" data-reveal>
+          <h2 class="eyebrow">Other ways to reach us</h2>
+          {contact.email && <p><a href={`mailto:${contact.email}`}>{contact.email}</a></p>}
+          {contact.phone && <p><a href={`tel:${contact.phone.replace(/[^\d+]/g, '')}`}>{contact.phone}</a></p>}
+          {
+            integrations.bookingUrl && (
+              <Button href={integrations.bookingUrl} variant="text">Book a short intro call</Button>
+            )
+          }
+          {!contact.email && !contact.phone && !integrations.bookingUrl && (
+            <p class="muted">Email and phone details will be added here soon.</p>
+          )}
+          <p class="muted">Serving {contact.serviceArea}.</p>
+        </div>
+      </aside>
+
+      <div class="contact__form">
+        <PreviewForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 3.5rem;
+  }
+  .contact__h {
+    font-size: var(--step-2);
+    margin-bottom: 1.5rem;
+  }
+  .steps {
+    padding: 0;
+    list-style: none;
+    counter-reset: s;
+    display: grid;
+    border-top: 1px solid var(--c-line);
+  }
+  .steps li {
+    counter-increment: s;
+    padding: 1rem 0 1rem 2.25rem;
+    border-bottom: 1px solid var(--c-line);
+    position: relative;
+    color: var(--ink-soft);
+  }
+  .steps li::before {
+    content: counter(s, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--c-sage-ink);
+  }
+  .contact__details {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 0.6rem;
+    justify-items: start;
+  }
+  .muted {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  @media (min-width: 60rem) {
+    .contact {
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+    }
+    .contact__aside {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+  }
+</style>

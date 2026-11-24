@@ -1,0 +1,92 @@
+---
+import { business, contact, navigation, offer } from '../config/site';
+import Wordmark from './Wordmark.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer theme-forest">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Wordmark />
+        <p>
+          {`Websites designed, hosted and cared for — for good local businesses in ${business.city}, ${business.region}.`}
+        </p>
+      </div>
+
+      <nav aria-label="Footer" class="site-footer__nav">
+        <h2 class="eyebrow">Studio</h2>
+        <ul role="list">
+          {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href={offer.primaryCtaHref}>Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__contact">
+        <h2 class="eyebrow">Get in touch</h2>
+        <ul role="list">
+          {contact.email && <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>}
+          {contact.phone && <li><a href={`tel:${contact.phone.replace(/[^\d+]/g, '')}`}>{contact.phone}</a></li>}
+          <li><a href={offer.primaryCtaHref}>{offer.primaryCta}</a></li>
+          <li>{business.city}, {business.region}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© {year} {business.name}. All rights reserved.</p>
+      <p>Portfolio pieces marked “design concept” are illustrative and not client work.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem) 2rem;
+    font-size: 0.95rem;
+  }
+  .site-footer a {
+    text-decoration: none;
+    color: var(--c-ivory);
+  }
+  .site-footer a:hover {
+    text-decoration: underline;
+  }
+  .site-footer ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+  .site-footer__top {
+    display: grid;
+    gap: 2.75rem;
+  }
+  .site-footer__brand p {
+    margin-top: 1.25rem;
+    max-width: 34ch;
+    color: var(--ink-soft);
+  }
+  .site-footer__contact li {
+    color: var(--ink-soft);
+  }
+  .site-footer__bottom {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-line);
+    display: grid;
+    gap: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  @media (min-width: 48rem) {
+    .site-footer__top {
+      grid-template-columns: 2fr 1fr 1.4fr;
+    }
+    .site-footer__bottom {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>

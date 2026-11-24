@@ -1,0 +1,33 @@
+---
+/** The Steadwell Studio wordmark: a simple monogram plus the name in type. */
+import { business } from '../config/site';
+---
+
+<span class="wordmark">
+  <svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <rect x="0.75" y="0.75" width="30.5" height="30.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+    <path d="M8 22.5h16" stroke="currentColor" stroke-width="1.5"></path>
+    <text x="16" y="19" text-anchor="middle" font-family="Fraunces Variable, Georgia, serif" font-size="15" font-style="italic" fill="currentColor">S</text>
+  </svg>
+  <span class="wordmark__name">{business.name}</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .wordmark__mark {
+    width: 1.9rem;
+    height: 1.9rem;
+    flex: none;
+  }
+  .wordmark__name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 420;
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 24;
+  }
+</style>

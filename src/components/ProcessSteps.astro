@@ -1,0 +1,60 @@
+---
+import { processSteps } from '../data/services';
+---
+
+<ol class="process" role="list">
+  {
+    processSteps.map((step, i) => (
+      <li class="process__step" data-reveal style={`--reveal-delay: ${i * 90}ms`}>
+        <span class="process__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{step.title}</h3>
+        <p>{step.text}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .process {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem;
+    counter-reset: step;
+  }
+  .process__step {
+    border-top: 1px solid var(--c-line);
+    padding-top: 1.25rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .process__num {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1;
+    color: var(--c-sage-ink);
+  }
+  :global(.theme-forest) .process__num {
+    color: var(--c-sage);
+  }
+  h3 {
+    font-size: var(--step-1);
+  }
+  p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  @media (min-width: 48rem) {
+    .process {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2.5rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .process {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

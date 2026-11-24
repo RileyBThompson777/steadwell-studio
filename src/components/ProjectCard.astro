@@ -1,0 +1,86 @@
+---
+/** Portfolio entry. Concepts are always labelled as such. */
+import ConceptMockup from './ConceptMockup.astro';
+import type { Project } from '../data/portfolio';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project, index } = Astro.props;
+const label = project.kind === 'concept' ? 'Design concept · fictional business' : 'Client project';
+---
+
+<article class="project" id={project.slug} data-reveal>
+  <ConceptMockup project={project} />
+  <div class="project__text">
+    <p class="eyebrow">
+      <span class="project__index">{String(index + 1).padStart(2, '0')}</span>
+      <span class="project__label" data-testid="project-label">{label}</span>
+    </p>
+    <h3>{project.name}</h3>
+    <p class="project__industry">{project.industry}</p>
+    <p class="project__summary">{project.summary}</p>
+    <ul class="project__focus" role="list" aria-label="Design focus">
+      {project.focus.map((f) => <li>{f}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .project {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .project__index {
+    font-family: var(--font-display);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-right: 0.6rem;
+  }
+  .project__label {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid currentColor;
+    font-size: 0.72rem;
+  }
+  h3 {
+    margin-top: 0.9rem;
+    font-size: var(--step-3);
+  }
+  .project__industry {
+    margin-top: 0.4rem;
+    color: var(--c-sage-ink);
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+  .project__summary {
+    margin-top: 1rem;
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+  .project__focus {
+    margin-top: 1.25rem;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: var(--step--1);
+  }
+  .project__focus li::before {
+    content: '— ';
+    color: var(--c-sage-ink);
+  }
+  @media (min-width: 56rem) {
+    .project {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .project:nth-child(even) > :first-child {
+      order: 2;
+    }
+  }
+</style>

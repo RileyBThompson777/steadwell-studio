@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+import { contact } from '../config/site';
+---
+
+<BaseLayout title="Thank you" noindex>
+  <PageHero
+    eyebrow="Request received"
+    title="Thank you. <em class='display-italic'>We’ll be in touch.</em>"
+    lede={`We’ve received your preview request and will reply ${contact.responseTime}.`}
+  >
+    <div class="back"><Button href="/" variant="text">Back to the homepage</Button></div>
+  </PageHero>
+</BaseLayout>
+
+<style>
+  .back {
+    margin-top: 2rem;
+  }
+</style>

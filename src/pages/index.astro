@@ -1,0 +1,292 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceList from '../components/ServiceList.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { business, offer, pricing, formatPrice } from '../config/site';
+import { projects } from '../data/portfolio';
+import { faqs } from '../data/faq';
+
+const facts = [
+  { label: 'Per month', value: formatPrice(pricing.monthly) },
+  { label: 'Setup fee', value: formatPrice(pricing.setupFee) },
+  { label: 'Custom pages', value: String(pricing.pages) },
+  { label: 'Hosting & care', value: 'Included' },
+];
+---
+
+<BaseLayout
+  title={`${business.name} — Websites for local service businesses in ${business.city}`}
+  rawTitle
+>
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow" data-reveal>{business.city} web design studio · Website as a service</p>
+        <h1 data-reveal style="--reveal-delay: 80ms">
+          Good business deserves a <em class="display-italic">better website.</em>
+        </h1>
+        <p class="lede" data-reveal style="--reveal-delay: 160ms">
+          We design, host and look after websites for small service businesses — starting with
+          automotive detailers. One monthly subscription, no setup fee, and a person you can actually
+          reach.
+        </p>
+        <div class="hero__actions" data-reveal style="--reveal-delay: 240ms">
+          <Button href={offer.primaryCtaHref}>{offer.primaryCta}</Button>
+          <Button href="/pricing/" variant="text">See what’s included</Button>
+        </div>
+      </div>
+
+      <dl class="hero__facts" data-reveal style="--reveal-delay: 300ms">
+        {
+          facts.map((f) => (
+            <div>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section statement" aria-labelledby="statement-title">
+    <div class="container statement__inner">
+      <p class="eyebrow" data-reveal>Why we exist</p>
+      <h2 id="statement-title" class="statement__text" data-reveal style="--reveal-delay: 80ms">
+        You take care with every job. Your website should show it — and it shouldn’t be
+        <em class="display-italic">one more thing</em> for you to manage.
+      </h2>
+      <div class="statement__cols" data-reveal style="--reveal-delay: 140ms">
+        <p>
+          Many good local businesses are let down online by a dated site, a social page doing a
+          website’s job, or no site at all. Customers searching from their phones move on quickly.
+        </p>
+        <p>
+          Steadwell Studio builds you a considered, fast website and then keeps it running: hosting,
+          security, updates and a short monthly report — for one predictable monthly fee.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section theme-ivory-deep" aria-labelledby="services-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        eyebrow="What’s included"
+        id="services-title"
+        title="Everything a local business site needs. <em class='display-italic'>Nothing it doesn’t.</em>"
+      />
+      <ServiceList compact />
+      <div class="section-foot" data-reveal>
+        <Button href="/services/" variant="text">Read about each service</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="work-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        eyebrow="Design concepts"
+        id="work-title"
+        title="Studies in what a detailer’s site <em class='display-italic'>could be.</em>"
+        intro="We are a new studio, so instead of borrowed logos we show design concepts for fictional businesses. Each one explores a different kind of detailing customer."
+      />
+      <div class="projects">
+        {projects.slice(0, 2).map((p, i) => <ProjectCard project={p} index={i} />)}
+      </div>
+      <div class="section-foot" data-reveal>
+        <Button href="/portfolio/" variant="text">View all design concepts</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section theme-forest" aria-labelledby="process-title">
+    <div class="container">
+      <SectionHeading
+        index="03"
+        eyebrow="How it works"
+        id="process-title"
+        title="From first look to launch, <em class='display-italic'>in four steps.</em>"
+      />
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pricing-title">
+    <div class="container pricing-teaser">
+      <div>
+        <p class="eyebrow" data-reveal>04 · Pricing</p>
+        <h2 id="pricing-title" data-reveal style="--reveal-delay: 80ms">
+          One plan. <em class="display-italic">One clear price.</em>
+        </h2>
+      </div>
+      <div class="pricing-teaser__body" data-reveal style="--reveal-delay: 140ms">
+        <p class="pricing-teaser__price">
+          {formatPrice(pricing.monthly)}<span>/month</span>
+        </p>
+        <p>
+          {formatPrice(pricing.setupFee)} setup. A {pricing.commitmentMonths}-month initial term, billed
+          monthly, then month to month. Design, hosting, updates and support are all included.
+        </p>
+        <Button href="/pricing/" variant="ghost">See full pricing</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight theme-ivory-deep" aria-labelledby="faq-title">
+    <div class="container">
+      <SectionHeading index="05" eyebrow="Questions" id="faq-title" title="Good questions, plainly answered." />
+      <FaqList items={faqs.slice(0, 4)} />
+      <div class="section-foot" data-reveal>
+        <Button href="/faq/" variant="text">All frequently asked questions</Button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 2rem + 7vw, 9rem) clamp(3rem, 2rem + 4vw, 6rem);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .hero__inner {
+    display: grid;
+    gap: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+  .hero h1 {
+    margin-top: 1.5rem;
+    max-width: 12ch;
+  }
+  .hero .lede {
+    margin-top: 1.75rem;
+    max-width: 42ch;
+  }
+  .hero__actions {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+  }
+  .hero__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--c-charcoal);
+  }
+  .hero__facts div {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .hero__facts div:nth-child(odd) {
+    padding-right: 1rem;
+    border-right: 1px solid var(--c-line);
+  }
+  .hero__facts div:nth-child(even) {
+    padding-left: 1rem;
+  }
+  .hero__facts dt {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+  .hero__facts dd {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 330;
+    color: var(--c-forest);
+    line-height: 1.15;
+    margin-top: 0.25rem;
+  }
+  @media (min-width: 64rem) {
+    .hero__inner {
+      grid-template-columns: 1.7fr 1fr;
+      align-items: end;
+    }
+    .hero__facts {
+      grid-template-columns: 1fr;
+    }
+    .hero__facts div:nth-child(n) {
+      padding: 1.1rem 0;
+      border-right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+  }
+
+  .statement__inner {
+    display: grid;
+    gap: 2rem;
+  }
+  .statement__text {
+    font-size: var(--step-3);
+    line-height: 1.2;
+    max-width: 26ch;
+  }
+  .statement__cols {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--ink-soft);
+    max-width: 60rem;
+  }
+  @media (min-width: 48rem) {
+    .statement__cols {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  .section-foot {
+    margin-top: 2.5rem;
+  }
+  .projects {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .pricing-teaser {
+    display: grid;
+    gap: 2rem;
+  }
+  .pricing-teaser h2 {
+    margin-top: 1.25rem;
+    max-width: 12ch;
+  }
+  .pricing-teaser__body {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    max-width: 40ch;
+    color: var(--ink-soft);
+  }
+  .pricing-teaser__price {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 2.5rem + 5vw, 6rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--c-forest);
+    letter-spacing: -0.03em;
+  }
+  .pricing-teaser__price span {
+    font-size: var(--step-1);
+    font-family: var(--font-body);
+    letter-spacing: 0;
+    color: var(--ink-soft);
+    margin-left: 0.35rem;
+  }
+  @media (min-width: 56rem) {
+    .pricing-teaser {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+    }
+  }
+</style>

@@ -1,0 +1,143 @@
+---
+/** The single subscription plan. All numbers come from src/config/site.ts. */
+import Button from './Button.astro';
+import { pricing, pricingDerived, formatPrice, offer } from '../config/site';
+import { services } from '../data/services';
+---
+
+<article class="plan" aria-labelledby="plan-name">
+  <header class="plan__head">
+    <p class="eyebrow">One plan, everything included</p>
+    <h2 id="plan-name" class="plan__name">{pricing.planName}</h2>
+    <p class="plan__price">
+      <span class="plan__amount" data-testid="monthly-price">{formatPrice(pricing.monthly)}</span>
+      <span class="plan__per">per month</span>
+    </p>
+    <dl class="plan__terms">
+      <div>
+        <dt>Setup fee</dt>
+        <dd data-testid="setup-fee">{formatPrice(pricing.setupFee)}</dd>
+      </div>
+      <div>
+        <dt>Initial term</dt>
+        <dd>{pricing.commitmentMonths} months, billed monthly</dd>
+      </div>
+      <div>
+        <dt>After that</dt>
+        <dd>Month to month</dd>
+      </div>
+    </dl>
+    <Button href={offer.primaryCtaHref}>{offer.primaryCta}</Button>
+    <p class="plan__note">
+      The first {pricing.commitmentMonths} months total {formatPrice(pricingDerived.firstTermTotal)}, paid
+      as {pricing.commitmentMonths} monthly payments of {formatPrice(pricing.monthly)}.
+    </p>
+  </header>
+
+  <div class="plan__body">
+    <h3 class="eyebrow">Included every month</h3>
+    <ul class="plan__list" role="list">
+      {services.map((s) => <li>{s.title}</li>)}
+    </ul>
+    <p class="plan__fine">
+      Premium third-party services — such as paid booking platforms, premium email, licensed photography or
+      domain registration — may carry additional fees. We always confirm these with you first.
+    </p>
+  </div>
+</article>
+
+<style>
+  .plan {
+    display: grid;
+    border: 1px solid var(--c-line);
+    background: var(--c-ivory);
+  }
+  .plan__head,
+  .plan__body {
+    padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  }
+  .plan__head {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .plan__name {
+    font-size: var(--step-3);
+  }
+  .plan__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .plan__amount {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 2.5rem + 5vw, 6rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--c-forest);
+  }
+  .plan__per {
+    color: var(--ink-soft);
+  }
+  .plan__terms {
+    display: grid;
+    gap: 0;
+    width: 100%;
+    border-top: 1px solid var(--c-line);
+  }
+  .plan__terms div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--c-line);
+    font-size: 0.95rem;
+  }
+  .plan__terms dt {
+    color: var(--ink-soft);
+  }
+  .plan__terms dd {
+    text-align: right;
+    font-weight: 500;
+  }
+  .plan__note,
+  .plan__fine {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .plan__list {
+    list-style: none;
+    padding: 0;
+    margin-block: 1.25rem 2rem;
+    display: grid;
+  }
+  .plan__list li {
+    padding: 0.8rem 0 0.8rem 1.75rem;
+    border-bottom: 1px solid var(--c-line);
+    position: relative;
+  }
+  .plan__list li::before {
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    top: 1.3rem;
+    width: 0.8rem;
+    height: 0.4rem;
+    border-left: 1.5px solid var(--c-forest);
+    border-bottom: 1.5px solid var(--c-forest);
+    transform: rotate(-45deg);
+  }
+  @media (min-width: 60rem) {
+    .plan {
+      grid-template-columns: 1fr 1fr;
+    }
+    .plan__head {
+      border-bottom: 0;
+      border-right: 1px solid var(--c-line);
+      align-content: start;
+    }
+  }
+</style>
