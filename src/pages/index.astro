@@ -28,7 +28,7 @@ const facts = [
       <div class="hero__copy">
         <p class="eyebrow" data-reveal>{business.city} web design studio · Website as a service</p>
         <h1 data-reveal style="--reveal-delay: 80ms">
-          Good business deserves a <em class="display-italic">better website.</em>
+          Good business deserves a <em class="display-slim">better website.</em>
         </h1>
         <p class="lede" data-reveal style="--reveal-delay: 160ms">
           We design, host and look after websites for small service businesses — starting with
@@ -58,8 +58,7 @@ const facts = [
     <div class="container statement__inner">
       <p class="eyebrow" data-reveal>Why we exist</p>
       <h2 id="statement-title" class="statement__text" data-reveal style="--reveal-delay: 80ms">
-        You take care with every job. Your website should show it — and it shouldn’t be
-        <em class="display-italic">one more thing</em> for you to manage.
+        You take care with every job. Your website should show it — and it shouldn’t be <em class="display-slim">one more thing</em> for you to manage.
       </h2>
       <div class="statement__cols" data-reveal style="--reveal-delay: 140ms">
         <p>
@@ -80,7 +79,7 @@ const facts = [
         index="01"
         eyebrow="What’s included"
         id="services-title"
-        title="Everything a local business site needs. <em class='display-italic'>Nothing it doesn’t.</em>"
+        title="Everything a local business site needs. <em class='display-slim'>Nothing it doesn’t.</em>"
       />
       <ServiceList compact />
       <div class="section-foot" data-reveal>
@@ -95,7 +94,7 @@ const facts = [
         index="02"
         eyebrow="Design concepts"
         id="work-title"
-        title="Studies in what a detailer’s site <em class='display-italic'>could be.</em>"
+        title="Studies in what a detailer’s site <em class='display-slim'>could be.</em>"
         intro="We are a new studio, so instead of borrowed logos we show design concepts for fictional businesses. Each one explores a different kind of detailing customer."
       />
       <div class="projects">
@@ -113,7 +112,7 @@ const facts = [
         index="03"
         eyebrow="How it works"
         id="process-title"
-        title="From first look to launch, <em class='display-italic'>in four steps.</em>"
+        title="From first look to launch, <em class='display-slim'>in four steps.</em>"
       />
       <ProcessSteps />
     </div>
@@ -124,7 +123,7 @@ const facts = [
       <div>
         <p class="eyebrow" data-reveal>04 · Pricing</p>
         <h2 id="pricing-title" data-reveal style="--reveal-delay: 80ms">
-          One plan. <em class="display-italic">One clear price.</em>
+          One plan. <em class="display-slim">One clear price.</em>
         </h2>
       </div>
       <div class="pricing-teaser__body" data-reveal style="--reveal-delay: 140ms">
@@ -201,7 +200,8 @@ const facts = [
   .hero__facts dd {
     font-family: var(--font-display);
     font-size: var(--step-3);
-    font-weight: 330;
+    font-weight: 280;
+    font-stretch: 88%;
     color: var(--c-forest);
     line-height: 1.15;
     margin-top: 0.25rem;
@@ -229,7 +229,7 @@ const facts = [
   }
   .statement__text {
     font-size: var(--step-3);
-    line-height: 1.2;
+    line-height: 1.15;
     max-width: 26ch;
   }
   .statement__cols {
@@ -271,7 +271,8 @@ const facts = [
   .pricing-teaser__price {
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 2.5rem + 5vw, 6rem);
-    font-weight: 300;
+    font-weight: 250;
+    font-stretch: 88%;
     line-height: 1;
     color: var(--c-forest);
     letter-spacing: -0.03em;
